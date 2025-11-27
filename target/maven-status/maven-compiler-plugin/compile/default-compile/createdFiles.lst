@@ -1,0 +1,11 @@
+com\ticketsystem\views\MenuView.class
+com\ticketsystem\database\DB.class
+com\ticketsystem\utils\ScreenManager.class
+com\ticketsystem\dao\IncidenciasDAO.class
+com\ticketsystem\views\LoadingView.class
+com\ticketsystem\views\ServicesView.class
+com\ticketsystem\database\SeedData.class
+com\ticketsystem\App.class
+com\ticketsystem\dao\UserDAO.class
+com\ticketsystem\views\LoginView.class
+com\ticketsystem\views\ReportView.class

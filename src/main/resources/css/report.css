@@ -1,0 +1,88 @@
+/* ================================
+   FONDO GENERAL
+================================ */
+.report-root {
+    -fx-background-color: #F5F8FA;
+}
+
+/* ================================
+   TARJETA PRINCIPAL
+================================ */
+.report-card {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 20 30; /* MENOR ALTURA Y ANCHO */
+    -fx-spacing: 18; /* MENOS ESPACIO ENTRE ELEMENTOS */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 15, 0.15, 0, 2);
+}
+
+/* ================================
+   TÍTULO
+================================ */
+.report-title {
+    -fx-font-size: 22px; /* ANTES 28 */
+    -fx-font-weight: bold;
+    -fx-text-fill: #0D1A33;
+}
+
+/* BOTONES DEL TOP BAR */
+.logout-btn, .home-btn {
+    -fx-background-color: #4a5d79;
+    -fx-padding: 5; /* MÁS PEQUEÑO */
+    -fx-cursor: hand;
+}
+
+.logout-btn:hover, .home-btn:hover {
+    -fx-background-color: #334054;
+    -fx-background-radius: 8px;
+}
+
+/* ================================
+   SUBTÍTULOS DE SECCIÓN
+================================ */
+.section-title {
+    -fx-font-size: 16px; /* ANTES 20 */
+    -fx-font-weight: bold;
+    -fx-text-fill: #0D1A33;
+}
+
+/* ================================
+   LABELS
+================================ */
+.field-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #0D1A33;
+}
+
+/* ================================
+   CAMPOS
+================================ */
+.input-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #E2E6EA;
+    -fx-border-width: 1;
+    -fx-padding: 4 8;
+    -fx-font-size: 13px;
+}
+
+/* TEXTAREA MÁS PEQUEÑO */
+.textarea-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+    -fx-font-size: 13px;
+}
+
+/* ================================
+   BOTÓN
+================================ */
+.submit-btn {
+    -fx-background-color: #3E537A;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-pref-height: 32;
+    -fx-pref-width: 130;
+}
