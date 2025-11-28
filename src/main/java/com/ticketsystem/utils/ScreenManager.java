@@ -7,13 +7,17 @@ import javafx.stage.Stage;
 public class ScreenManager {
 
     private static Stage window;
+    private static Scene scene;   // 👈 UNA sola escena global
 
     public static void setStage(Stage stage) {
         window = stage;
 
-        // Configuración inicial del stage
+        // Crear una escena vacía al iniciar
+        scene = new Scene(new Parent(){}, 1280, 720);
+
+        window.setScene(scene);
         window.setResizable(true);
-        window.setMaximized(true);     // Que arranque maximizado
+        window.setMaximized(true);
     }
 
     public static void show(Parent root) {
@@ -23,15 +27,13 @@ public class ScreenManager {
             return;
         }
 
-        Scene scene = new Scene(root, 1280, 720);
-        window.setScene(scene);
+        // 👈 Aquí solo actualizamos el contenido
+        scene.setRoot(root);
 
-        // Forzar que cada pantalla quede maximizada
         if (!window.isMaximized()) {
             window.setMaximized(true);
         }
 
-        // Opcional: reposicionar en caso de glitch
         window.centerOnScreen();
     }
 

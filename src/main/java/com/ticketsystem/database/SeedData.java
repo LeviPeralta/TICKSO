@@ -42,10 +42,10 @@ public class SeedData {
     }
 
     private static void insertarUsuariosDemo() {
-        UserDAO.crearUsuario("admin", "1234");
-        UserDAO.crearUsuario("jose", "1234");
-        UserDAO.crearUsuario("tecnico1", "abc123");
-        UserDAO.crearUsuario("tecnico2", "pass456");
+        UserDAO.crearUsuario("admin", "1234", "admin");
+        UserDAO.crearUsuario("josseph", "1234", "usuario");
+        UserDAO.crearUsuario("tecnico1", "abc123", "tecnico");
+        UserDAO.crearUsuario("tecnico2", "pass456", "tecnico");
 
         System.out.println("Usuarios de prueba insertados correctamente.");
     }

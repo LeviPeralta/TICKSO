@@ -1,8 +1,10 @@
 CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usuario TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    rol TEXT NOT NULL   -- "admin", "tecnico" o "usuario"
 );
+
 
 CREATE TABLE IF NOT EXISTS incidencias (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,6 +1,7 @@
 package com.ticketsystem.views;
 
 import com.ticketsystem.dao.UserDAO;
+import com.ticketsystem.model.User;
 import com.ticketsystem.utils.ScreenManager;
 
 import javafx.animation.KeyFrame;
@@ -65,32 +66,47 @@ public class LoginView extends StackPane {
         Button loginBtn = new Button("Iniciar Sesión");
         loginBtn.getStyleClass().add("login-btn");
 
-        // === ACCIÓN LOGIN CON SQLITE ===
+        // === ACCIÓN LOGIN CON ROLES ===
         loginBtn.setOnAction(e -> {
 
             String user = usuario.getText().trim();
             String pass = password.getText().trim();
 
-            boolean acceso = UserDAO.validarLogin(user, pass);
+            // Ahora regresa un objeto User
+            User loggedUser = UserDAO.login(user, pass);
 
-            if (acceso) {
+            if (loggedUser != null) {
 
                 error.setVisible(false);
 
-                // 1. Mostrar pantalla de carga
+                // Mostrar pantalla de carga
                 ScreenManager.show(LoadingView.getView());
 
-                // 2. Esperar 3 segundos -> abrir menú
-                Timeline wait = new Timeline(
-                    new KeyFrame(Duration.seconds(3), ev -> {
-                        ScreenManager.show(MenuView.getView());
-                    })
-                );
+                Timeline wait = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {
+
+                    switch (loggedUser.getRol().toLowerCase()) {
+                        case "admin":
+                            ScreenManager.show(MenuView.getView());
+                            break;
+
+                        case "tecnico":
+                            ScreenManager.show(ServicesView.getView());
+                            break;
+
+                        case "usuario":
+                            ScreenManager.show(MenuView.getView());
+                            break;
+
+                        default:
+                            System.out.println("Rol desconocido: " + loggedUser.getRol());
+                            ScreenManager.show(MenuView.getView());
+                    }
+
+                }));
                 wait.setCycleCount(1);
                 wait.play();
 
             } else {
-
                 error.setText("Usuario o contraseña incorrectos");
                 error.setVisible(true);
 
@@ -100,7 +116,6 @@ public class LoginView extends StackPane {
                 hideError.play();
             }
         });
-
 
         card.getChildren().addAll(
                 title, subtitle, iniciar, usuario, password,

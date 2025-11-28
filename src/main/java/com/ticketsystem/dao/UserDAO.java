@@ -5,11 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.ticketsystem.database.DB;
+import com.ticketsystem.model.User;
 
 public class UserDAO {
 
-    public static boolean validarLogin(String usuario, String password) {
-        String sql = "SELECT password FROM usuarios WHERE usuario = ?";
+    /**
+     * Iniciar sesión y devolver un objeto User con su rol
+     */
+    public static User login(String usuario, String password) {
+
+        String sql = "SELECT * FROM usuarios WHERE usuario = ?";
 
         try (Connection conn = DB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -22,38 +27,49 @@ public class UserDAO {
 
                     String passBD = rs.getString("password");
 
-                    // TODO: si usas texto plano:
-                    return password.equals(passBD);
+                    // Validación simple
+                    if (password.equals(passBD)) {
 
-                    // Si usas BCrypt:
-                    // return BCrypt.checkpw(password, passBD);
+                        return new User(
+                                rs.getInt("id"),
+                                rs.getString("usuario"),
+                                rs.getString("password"),
+                                rs.getString("rol")  // ← IMPORTANTE
+                        );
+                    }
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("Error en validarLogin: " + e.getMessage());
+            System.out.println("Error en login: " + e.getMessage());
+        }
+
+        return null; // Usuario no encontrado o password incorrecto
+    }
+
+
+    /**
+     * Crear usuario con rol
+     */
+    public static boolean crearUsuario(String usuario, String password, String rol) {
+
+        String sql = "INSERT INTO usuarios (usuario, password, rol) VALUES (?, ?, ?)";
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, usuario);
+            stmt.setString(2, password);
+            stmt.setString(3, rol);
+
+            int filas = stmt.executeUpdate();
+            return filas > 0;
+
+        } catch (Exception e) {
+            System.out.println("Error al crear usuario: " + e.getMessage());
         }
 
         return false;
     }
-
-    public static boolean crearUsuario(String usuario, String password) {
-    String sql = "INSERT INTO usuarios (usuario, password) VALUES (?, ?)";
-
-    try (Connection conn = DB.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-        stmt.setString(1, usuario);
-        stmt.setString(2, password);
-
-        int filas = stmt.executeUpdate();
-        return filas > 0;
-
-    } catch (Exception e) {
-        System.out.println("Error al crear usuario: " + e.getMessage());
-    }
-
-    return false;
-}
 
 }
