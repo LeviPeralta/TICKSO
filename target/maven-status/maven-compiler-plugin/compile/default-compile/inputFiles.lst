@@ -6,7 +6,9 @@ C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\database
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\database\SeedData.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\model\Incidencia.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\model\User.java
+C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\services\IncidenciaService.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\utils\ScreenManager.java
+C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\AdminHistoryView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\LoadingView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\LoginView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\MenuView.java

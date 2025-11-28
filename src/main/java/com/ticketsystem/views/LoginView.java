@@ -86,7 +86,7 @@ public class LoginView extends StackPane {
 
                     switch (loggedUser.getRol().toLowerCase()) {
                         case "admin":
-                            ScreenManager.show(MenuView.getView());
+                            ScreenManager.show(AdminHistoryView.getView());
                             break;
 
                         case "tecnico":
