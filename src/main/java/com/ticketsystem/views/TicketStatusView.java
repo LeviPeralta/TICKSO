@@ -2,6 +2,7 @@ package com.ticketsystem.views;
 
 import java.util.List;
 
+import com.ticketsystem.components.ConfirmDialog;
 import com.ticketsystem.dao.IncidenciasDAO;
 import com.ticketsystem.model.Incidencia;
 import com.ticketsystem.utils.ScreenManager;
@@ -26,16 +27,13 @@ import javafx.scene.layout.VBox;
 
 public class TicketStatusView {
 
-    /***
-     * MÉTODO PRINCIPAL → retorna el ROOT para usarlo en ScreenManager.show()
-     */
     public Parent getView() {
 
         BorderPane root = new BorderPane();
         root.getStyleClass().add("status-root");
 
         root.getStylesheets().add(
-            ReportView.class.getResource("/css/status.css").toExternalForm()
+                ReportView.class.getResource("/css/status.css").toExternalForm()
         );
 
         /* -------------------------
@@ -84,13 +82,10 @@ public class TicketStatusView {
         /* -------------------------
         TABLAS
         -------------------------- */
-
         TabPane tabPane = new TabPane();
 
-        // LISTA QUE GUARDA TODAS LAS TABLAS
         List<TableView<Incidencia>> allTables = new java.util.ArrayList<>();
 
-        // Crear tablas y agregarlas a la lista
         TableView<Incidencia> tableTodos = crearTabla(allTables);
         TableView<Incidencia> tableEspera = crearTabla(allTables);
         TableView<Incidencia> tableAbierto = crearTabla(allTables);
@@ -158,15 +153,20 @@ public class TicketStatusView {
                 btnEliminar.getStyleClass().add("action-btn");
 
                 btnEliminar.setOnAction(e -> {
+
+                    // ❗ NUEVO → sin casteo a StackPane
+                    Parent rootNode = table.getScene().getRoot();
+
                     Incidencia inc = getTableView().getItems().get(getIndex());
 
-                    // ELIMINAR DE LA BD
-                    IncidenciasDAO.eliminar(inc.getId());
+                    ConfirmDialog.show(rootNode, "¿Está seguro de eliminar este ticket?", () -> {
 
-                    // ELIMINAR DE TODAS LAS TABLAS
-                    for (TableView<Incidencia> t : allTables) {
-                        t.getItems().removeIf(item -> item.getId() == inc.getId());
-                    }
+                        IncidenciasDAO.eliminar(inc.getId());
+
+                        for (TableView<Incidencia> t : allTables) {
+                            t.getItems().removeIf(item -> item.getId() == inc.getId());
+                        }
+                    });
                 });
             }
 
@@ -181,6 +181,5 @@ public class TicketStatusView {
 
         return table;
     }
-
 
 }

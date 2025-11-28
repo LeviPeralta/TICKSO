@@ -10,6 +10,7 @@ com\ticketsystem\database\SeedData.class
 com\ticketsystem\App.class
 com\ticketsystem\utils\ScreenManager.class
 com\ticketsystem\utils\ScreenManager$1.class
+com\ticketsystem\components\ConfirmDialog.class
 com\ticketsystem\views\TicketStatusView.class
 com\ticketsystem\dao\UserDAO.class
 com\ticketsystem\views\LoginView.class
