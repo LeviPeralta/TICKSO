@@ -1,5 +1,6 @@
 package com.ticketsystem.views;
 
+import com.ticketsystem.dao.IncidenciasDAO;
 import com.ticketsystem.utils.ScreenManager;
 
 import javafx.geometry.Insets;
@@ -25,8 +26,7 @@ public class ReportView {
         // ROOT
         BorderPane root = new BorderPane();
         root.getStyleClass().add("report-root");
-        root.setPadding(new Insets(20)); // antes 40
-
+        root.setPadding(new Insets(20));
 
         // =====================================================================================
         // TOP BAR
@@ -47,8 +47,7 @@ public class ReportView {
         Button homeBtn = new Button();
         homeBtn.setGraphic(homeIcon);
         homeBtn.getStyleClass().add("home-btn");
-
-        homeBtn.setOnAction(e -> { ScreenManager.show(MenuView.getView()); });
+        homeBtn.setOnAction(e -> ScreenManager.show(MenuView.getView()));
 
         ImageView logoutIcon = new ImageView(
                 new Image(MenuView.class.getResource("/images/logout.png").toExternalForm())
@@ -59,10 +58,7 @@ public class ReportView {
         Button logoutBtn = new Button();
         logoutBtn.setGraphic(logoutIcon);
         logoutBtn.getStyleClass().add("logout-btn");
-
-        logoutBtn.setOnAction(e -> {
-            ScreenManager.show(new LoginView());
-        });
+        logoutBtn.setOnAction(e -> ScreenManager.show(new LoginView()));
 
         HBox rightBox = new HBox(15, homeBtn, logoutBtn);
         rightBox.setAlignment(Pos.CENTER_RIGHT);
@@ -79,13 +75,12 @@ public class ReportView {
         // =====================================================================================
 
         VBox card = new VBox(18);
-
         card.getStyleClass().add("report-card");
 
         Label titulo = new Label("Formulario");
         titulo.getStyleClass().add("report-title");
 
-        // === SECCIÓN DE DATOS PERSONALES ===
+        // === SECCIÓN DATOS PERSONALES ===
         Label datosPersonales = new Label("Datos personales");
         datosPersonales.getStyleClass().add("section-title");
 
@@ -93,13 +88,10 @@ public class ReportView {
         grid.setHgap(15);
         grid.setVgap(10);
 
-
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
-
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPercentWidth(50);
-
         grid.getColumnConstraints().addAll(col1, col2);
 
         Label lblNombre = new Label("Nombre(s):");
@@ -143,19 +135,17 @@ public class ReportView {
         grid.add(txtTel, 0, 5);
 
         // =====================================================================================
-        // INCIDENCIA (ComboBox)
+        // INCIDENCIA
         // =====================================================================================
 
         Label incidencia = new Label("Incidencia");
         incidencia.getStyleClass().add("section-title");
 
-        // ComboBox para tipo de incidencia
         Label tipoLabel = new Label("Seleccione el tipo de incidencia:");
         tipoLabel.getStyleClass().add("field-label");
 
         ComboBox<String> comboIncidencia = new ComboBox<>();
         comboIncidencia.getStyleClass().add("input-field");
-
         comboIncidencia.getItems().addAll(
                 "Falla eléctrica",
                 "Problemas de red o Internet",
@@ -168,59 +158,58 @@ public class ReportView {
                 "Actualización de software",
                 "Otros"
         );
-
         comboIncidencia.setPromptText("Seleccione una opción");
 
-        Label descripcionLabel = new Label("Describe a detalle su situación:");
+        Label descripcionLabel = new Label("Describa la situación:");
         descripcionLabel.getStyleClass().add("field-label");
 
         TextArea descripcion = new TextArea();
         descripcion.getStyleClass().add("textarea-field");
         descripcion.setPrefRowCount(3);
 
-
+        // =====================================================================================
         // BOTÓN
+        // =====================================================================================
+
         Button btnEnviar = new Button("Enviar");
         btnEnviar.getStyleClass().add("submit-btn");
         btnEnviar.setOnAction(e -> {
-                String nombre = txtNombre.getText();
-                String primer = txtPrimer.getText();
-                String segundo = txtSegundo.getText();
-                String telefono = txtTel.getText();
-                String tipo = comboIncidencia.getValue();
-                String desc = descripcion.getText();
 
-                // Validaciones simples
-                if (nombre.isEmpty() || primer.isEmpty() || telefono.isEmpty() || tipo == null || desc.isEmpty()) {
-                        System.out.println("⚠️ Todos los campos necesarios no están completos.");
-                        return;
-                }
+            String nombre = txtNombre.getText();
+            String primer = txtPrimer.getText();
+            String segundo = txtSegundo.getText();
+            String telefono = txtTel.getText();
+            String tipo = comboIncidencia.getValue();
+            String desc = descripcion.getText();
+            String estado = "En espera"; // 🔥 AGREGADO
 
-                boolean ok = com.ticketsystem.dao.IncidenciasDAO.guardar(
-                        nombre,
-                        primer,
-                        segundo,
-                        telefono,
-                        tipo,
-                        desc
-                );
+            if (nombre.isEmpty() || primer.isEmpty() || telefono.isEmpty() || tipo == null || desc.isEmpty()) {
+                System.out.println("⚠️ Debes llenar todos los campos obligatorios.");
+                return;
+            }
 
-                if (ok) {
-                        System.out.println("✅ Incidencia guardada correctamente.");
-                        
-                        // Limpiar formulario
-                        txtNombre.clear();
-                        txtPrimer.clear();
-                        txtSegundo.clear();
-                        txtTel.clear();
-                        comboIncidencia.getSelectionModel().clearSelection();
-                        descripcion.clear();
+            boolean ok = IncidenciasDAO.guardar(
+                    nombre,
+                    primer,
+                    segundo,
+                    telefono,
+                    tipo,
+                    desc,
+                    estado          // 🔥 AHORA SE ENVÍA EL ESTADO
+            );
 
-                } else {
-                        System.out.println("❌ Error al guardar la incidencia.");
-                }
+            if (ok) {
+                System.out.println("✅ Incidencia guardada correctamente.");
+                txtNombre.clear();
+                txtPrimer.clear();
+                txtSegundo.clear();
+                txtTel.clear();
+                comboIncidencia.getSelectionModel().clearSelection();
+                descripcion.clear();
+            } else {
+                System.out.println("❌ Error al guardar la incidencia.");
+            }
         });
-
 
         HBox footer = new HBox(btnEnviar);
         footer.setAlignment(Pos.CENTER);

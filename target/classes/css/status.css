@@ -1,0 +1,183 @@
+/* =====================================================
+   ESTILO GENERAL
+===================================================== */
+
+.status-root {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 20 35 30 35;
+    -fx-font-family: "Segoe UI", Roboto, Arial;
+}
+
+/* =====================================================
+   TOP BAR
+===================================================== */
+
+.home-btn,
+.logout-btn {
+    -fx-background-color: #4a5d79;
+    -fx-text-fill: white;
+    -fx-padding: 7 12;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.home-btn:hover,
+.logout-btn:hover {
+    -fx-background-color: #334054;
+}
+
+/* =====================================================
+   TÍTULO PRINCIPAL
+===================================================== */
+
+.status-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 0 0 15 0;
+}
+
+/* =====================================================
+   TABS
+===================================================== */
+
+.tab-pane {
+    -fx-tab-min-width: 140;
+    -fx-tab-max-width: 140;
+    -fx-tab-min-height: 40;
+}
+
+.tab-header-area {
+    -fx-background-color: transparent;
+}
+
+.tab {
+    -fx-background-color: #d9d9d9;
+    -fx-background-radius: 15 15 0 0;
+    -fx-background-insets: 0;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-cursor: hand;
+}
+
+.tab:hover {
+    -fx-background-color: #c8c8c8;
+}
+
+.tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15 15 0 0;
+    -fx-text-fill: #222;
+}
+
+.tab-label {
+    -fx-text-fill: inherit;
+}
+
+.tab:selected .tab-label {
+    -fx-font-weight: bold;
+}
+
+/* =====================================================
+   TABLA DE TICKETS
+===================================================== */
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view > .virtual-flow > .scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.table-view > .virtual-flow > .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 15 15 0 0;
+    -fx-background-insets: 0;
+    -fx-padding: 5 0;
+}
+
+.table-view .column-header {
+    -fx-pref-height: 45px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 15;
+}
+
+.table-row-cell {
+    -fx-font-size: 14px;
+    -fx-cell-size: 48px;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #cfe2ff;
+}
+
+.table-cell {
+    -fx-padding: 10 0 10 15;
+}
+/* -------------------------
+   BADGES (Estados)
+-------------------------- */
+
+/* Estado: EN ESPERA */
+.badge-espera {
+    -fx-background-color: #ffce54;
+    -fx-background-radius: 15;
+    -fx-background-insets: 0;
+    -fx-padding: 5 12;
+    -fx-text-fill: #5a4700;
+    -fx-font-weight: bold;
+}
+
+/* Estado: ABIERTO */
+.badge-abierto {
+    -fx-background-color: #4fc1e9;
+    -fx-background-radius: 15;
+    -fx-background-insets: 0;
+    -fx-padding: 5 12;
+    -fx-text-fill: #003244;
+    -fx-font-weight: bold;
+}
+
+/* Estado: EN PROCESO */
+.badge-proceso {
+    -fx-background-color: #ac92ec;
+    -fx-background-radius: 15;
+    -fx-background-insets: 0;
+    -fx-padding: 5 12;
+    -fx-text-fill: #3b0064;
+    -fx-font-weight: bold;
+}
+
+/* Estado: RESUELTO */
+.badge-resuelto {
+    -fx-background-color: #a0d468;
+    -fx-background-radius: 15;
+    -fx-background-insets: 0;
+    -fx-padding: 5 12;
+    -fx-text-fill: #1f3d00;
+    -fx-font-weight: bold;
+}
+
+/* =====================================================
+   BOTONES DE ACCIÓN
+===================================================== */
+
+.action-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5;
+    -fx-background-radius: 8;
+}
+
+.action-btn:hover {
+    -fx-background-color: #ffe3e3;
+}

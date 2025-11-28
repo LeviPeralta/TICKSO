@@ -25,7 +25,7 @@ public class DB {
 
     private static void initDatabase() {
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+            Statement stmt = conn.createStatement()) {
 
             String sql = """
                 CREATE TABLE IF NOT EXISTS usuarios (
@@ -41,7 +41,8 @@ public class DB {
                     segundo_apellido TEXT,
                     telefono TEXT NOT NULL,
                     tipo TEXT NOT NULL,
-                    descripcion TEXT NOT NULL
+                    descripcion TEXT NOT NULL,
+                    estado TEXT NOT NULL 
                 );
                 """;
 
@@ -50,5 +51,6 @@ public class DB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

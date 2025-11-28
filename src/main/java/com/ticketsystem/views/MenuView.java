@@ -62,6 +62,10 @@ public class MenuView {
             ScreenManager.show(ReportView.getView());
         });
 
+        c2.setOnMouseClicked(e -> {
+            ScreenManager.show(new TicketStatusView().getView());
+        });
+
         HBox cards = new HBox(90, c1, c2);
         cards.setAlignment(Pos.CENTER);
 
