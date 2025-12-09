@@ -63,7 +63,7 @@ public class IncidenciasDAO {
 
         String sql = """
             SELECT id, nombre, primer_apellido, segundo_apellido,
-                   telefono, tipo, descripcion, estado, id_tecnico
+                   telefono, tipo, descripcion, estado, id_usuario_asignado
             FROM incidencias
         """;
 
@@ -155,7 +155,7 @@ public class IncidenciasDAO {
 
         String sql = """
             SELECT id, nombre, primer_apellido, segundo_apellido,
-                   telefono, tipo, descripcion, estado, id_tecnico
+                   telefono, tipo, descripcion, estado, id_usuario_asignado
             FROM incidencias
             WHERE estado = ?
         """;

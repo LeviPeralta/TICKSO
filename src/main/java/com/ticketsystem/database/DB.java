@@ -43,7 +43,9 @@ public class DB {
                     telefono TEXT NOT NULL,
                     tipo TEXT NOT NULL,
                     descripcion TEXT NOT NULL,
-                    estado TEXT NOT NULL 
+                    estado TEXT NOT NULL ,
+                    id_usuario_asignado INTEGER,
+                    FOREIGN KEY (id_usuario_asignado) REFERENCES usuarios(id)
                 );
                 """;
 
