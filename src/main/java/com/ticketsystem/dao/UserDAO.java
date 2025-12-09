@@ -72,4 +72,31 @@ public class UserDAO {
         return false;
     }
 
+    public static java.util.List<User> getTecnicos() {
+
+        java.util.List<User> lista = new java.util.ArrayList<>();
+
+        String sql = "SELECT id, usuario, password, rol FROM usuarios WHERE LOWER(rol) = 'tecnico'";
+
+        try (Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(new User(
+                    rs.getInt("id"),
+                    rs.getString("usuario"),
+                    rs.getString("password"),
+                    rs.getString("rol")
+                ));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al obtener técnicos: " + e.getMessage());
+        }
+
+        return lista;
+    }
+
+
 }

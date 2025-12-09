@@ -11,7 +11,7 @@ import com.ticketsystem.model.Incidencia;
 
 public class IncidenciasDAO {
 
-    // Tu método guardar existente
+    // Guardar incidencia
     public static boolean guardar(
         String nombre,
         String primerApellido,
@@ -47,7 +47,7 @@ public class IncidenciasDAO {
         return false;
     }
 
-    // Método para precargar 5 incidencias de prueba
+    // Precargar 5 incidencias
     public static void precargarIncidencias() {
         guardar("Juan", "Pérez", "Gómez", "5551234567", "Software", "Falla en login", "En espera");
         guardar("María", "López", "Hernández", "5559876543", "Hardware", "Monitor no enciende", "En proceso");
@@ -56,15 +56,20 @@ public class IncidenciasDAO {
         guardar("Luis", "García", "Vega", "5554321678", "Hardware", "Teclado con teclas pegadas", "En proceso");
     }
 
+    // Obtener todas
     public static List<Incidencia> obtenerTodas() {
 
-    List<Incidencia> lista = new ArrayList<>();
+        List<Incidencia> lista = new ArrayList<>();
 
-        String sql = "SELECT id, nombre, primer_apellido, segundo_apellido, telefono, tipo, descripcion, estado FROM incidencias";
+        String sql = """
+            SELECT id, nombre, primer_apellido, segundo_apellido,
+                   telefono, tipo, descripcion, estado, id_tecnico
+            FROM incidencias
+        """;
 
         try (Connection conn = DB.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
 
@@ -76,7 +81,8 @@ public class IncidenciasDAO {
                     rs.getString("telefono"),
                     rs.getString("tipo"),
                     rs.getString("descripcion"),
-                    rs.getString("estado")  // 🔥 nuevo
+                    rs.getString("estado"),
+                    rs.getInt("id_tecnico")
                 ));
             }
 
@@ -87,12 +93,13 @@ public class IncidenciasDAO {
         return lista;
     }
 
+    // Eliminar
     public static boolean eliminar(int id) {
 
         String sql = "DELETE FROM incidencias WHERE id = ?";
 
         try (Connection conn = DB.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
@@ -103,4 +110,62 @@ public class IncidenciasDAO {
         }
     }
 
+    // Asignar técnico
+    public static boolean asignarTecnico(int idIncidencia, int idTecnico) {
+        String sql = "UPDATE incidencias SET id_tecnico = ? WHERE id = ?";
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idTecnico);
+            stmt.setInt(2, idIncidencia);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Obtener por estado
+    public static List<Incidencia> getByEstado(String estado) {
+
+        List<Incidencia> lista = new ArrayList<>();
+
+        String sql = """
+            SELECT id, nombre, primer_apellido, segundo_apellido,
+                   telefono, tipo, descripcion, estado, id_tecnico
+            FROM incidencias
+            WHERE estado = ?
+        """;
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, estado);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    lista.add(new Incidencia(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("primer_apellido"),
+                        rs.getString("segundo_apellido"),
+                        rs.getString("telefono"),
+                        rs.getString("tipo"),
+                        rs.getString("descripcion"),
+                        rs.getString("estado"),
+                        rs.getInt("id_tecnico")
+                    ));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
 }

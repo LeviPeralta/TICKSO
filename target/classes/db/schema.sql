@@ -13,5 +13,7 @@ CREATE TABLE IF NOT EXISTS incidencias (
     segundo_apellido TEXT,
     telefono TEXT NOT NULL,
     tipo TEXT NOT NULL,
-    descripcion TEXT NOT NULL
+    descripcion TEXT NOT NULL,
+    estado TEXT NOT NULL,  -- "abierta", "en_proceso", "cerrada"
+    id_tecnico INTEGER
 );

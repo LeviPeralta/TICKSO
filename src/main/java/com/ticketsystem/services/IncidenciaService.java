@@ -29,7 +29,8 @@ public class IncidenciaService {
                         rs.getString("telefono"),
                         rs.getString("tipo"),
                         rs.getString("descripcion"),
-                        rs.getString("estado")
+                        rs.getString("estado"),
+                        rs.getInt("id_tecnico")
                 ));
             }
 

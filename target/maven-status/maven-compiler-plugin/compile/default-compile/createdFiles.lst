@@ -1,6 +1,8 @@
 com\ticketsystem\views\MenuView.class
 com\ticketsystem\services\IncidenciaService.class
+com\ticketsystem\views\AsignarTecnicosView.class
 com\ticketsystem\model\Incidencia.class
+com\ticketsystem\views\AsignarTecnicosView$1.class
 com\ticketsystem\database\DB.class
 com\ticketsystem\dao\IncidenciasDAO.class
 com\ticketsystem\model\User.class

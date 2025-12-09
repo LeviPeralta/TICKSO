@@ -10,9 +10,10 @@ public class Incidencia {
     private String tipo;
     private String descripcion;
     private String estado = "En espera"; // Estado inicial por defecto
+    private Integer idTecnico; // ID del técnico asignado, puede ser null
 
     public Incidencia(int id, String nombre, String primerApellido, String segundoApellido,
-                      String telefono, String tipo, String descripcion, String estado) {
+                      String telefono, String tipo, String descripcion, String estado, Integer idTecnico) {
 
         this.id = id;
         this.nombre = nombre;
@@ -22,6 +23,7 @@ public class Incidencia {
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.estado = estado;
+        this.idTecnico = idTecnico;
     }
 
     public int getId() { return id; }
@@ -31,6 +33,16 @@ public class Incidencia {
     public String getTelefono() { return telefono; }
     public String getTipo() { return tipo; }
     public String getDescripcion() { return descripcion; }
+
+    public int getIdTecnico() { return idTecnico; }
+
+    public void setIdTecnico(Integer idTecnico) {
+        this.idTecnico = idTecnico;
+    }
+
+    public String getDetalles() {
+        return descripcion;
+    }
 
     public String getEstado() { 
         return estado; 
