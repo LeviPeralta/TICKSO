@@ -82,7 +82,7 @@ public class IncidenciasDAO {
                     rs.getString("tipo"),
                     rs.getString("descripcion"),
                     rs.getString("estado"),
-                    rs.getInt("id_tecnico")
+                    rs.getInt("id_usuario_asignado")
                 ));
             }
 
@@ -111,22 +111,42 @@ public class IncidenciasDAO {
     }
 
     // Asignar técnico
-    public static boolean asignarTecnico(int idIncidencia, int idTecnico) {
-        String sql = "UPDATE incidencias SET id_tecnico = ? WHERE id = ?";
+    public static boolean asignarTecnico(int idIncidencia, int idUsuario) {
 
-        try (Connection conn = DB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        // Verificar que el usuario tiene rol técnico
+        String checkSql = "SELECT COUNT(*) FROM usuarios WHERE id = ? AND rol = 'tecnico'";
 
-            stmt.setInt(1, idTecnico);
-            stmt.setInt(2, idIncidencia);
+        // Actualizar incidencia con el id del técnico
+        String updateSql = "UPDATE incidencias SET id_usuario_asignado = ? WHERE id = ?";
 
-            return stmt.executeUpdate() > 0;
+        try (Connection conn = DB.getConnection()) {
+
+            // Validar rol
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                checkStmt.setInt(1, idUsuario);
+
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        System.out.println("❌ El usuario NO es técnico.");
+                        return false;
+                    }
+                }
+            }
+
+            // Asignar el técnico
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                updateStmt.setInt(1, idUsuario);
+                updateStmt.setInt(2, idIncidencia);
+
+                return updateStmt.executeUpdate() > 0;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
+
 
     // Obtener por estado
     public static List<Incidencia> getByEstado(String estado) {
@@ -157,7 +177,7 @@ public class IncidenciasDAO {
                         rs.getString("tipo"),
                         rs.getString("descripcion"),
                         rs.getString("estado"),
-                        rs.getInt("id_tecnico")
+                        rs.getInt("id_usuario_asignado")
                     ));
                 }
             }

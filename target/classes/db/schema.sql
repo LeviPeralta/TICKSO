@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS incidencias (
     telefono TEXT NOT NULL,
     tipo TEXT NOT NULL,
     descripcion TEXT NOT NULL,
-    estado TEXT NOT NULL,  -- "abierta", "en_proceso", "cerrada"
-    id_tecnico INTEGER
+    estado TEXT NOT NULL,
+    id_usuario_asignado INTEGER,
+    FOREIGN KEY (id_usuario_asignado) REFERENCES usuarios(id)
 );
+

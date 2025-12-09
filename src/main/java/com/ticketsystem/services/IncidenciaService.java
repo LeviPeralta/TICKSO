@@ -30,7 +30,7 @@ public class IncidenciaService {
                         rs.getString("tipo"),
                         rs.getString("descripcion"),
                         rs.getString("estado"),
-                        rs.getInt("id_tecnico")
+                        rs.getInt("id_usuario_asignado")
                 ));
             }
 

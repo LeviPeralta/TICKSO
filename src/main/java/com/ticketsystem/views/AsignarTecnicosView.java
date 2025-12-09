@@ -15,11 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class AsignarTecnicosView {
 
@@ -38,7 +34,6 @@ public class AsignarTecnicosView {
         Button btnHistorial = new Button("Historial");
         btnHistorial.getStyleClass().add("sidebar-title");
         btnHistorial.setOnAction(e -> ScreenManager.show(AdminHistoryView.getView()));
-
 
         Button btnAsignar = new Button("Asignar técnicos");
         btnAsignar.getStyleClass().add("sidebar-btn-selected");
@@ -94,16 +89,24 @@ public class AsignarTecnicosView {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Incidencia, String> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getId())));
+        colId.setCellValueFactory(c ->
+                new SimpleStringProperty(String.valueOf(c.getValue().getId()))
+        );
 
         TableColumn<Incidencia, String> colEstado = new TableColumn<>("Estado");
-        colEstado.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getEstado()));
+        colEstado.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getEstado())
+        );
 
         TableColumn<Incidencia, String> colTipo = new TableColumn<>("Tipo");
-        colTipo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTipo()));
+        colTipo.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getTipo())
+        );
 
-        TableColumn<Incidencia, String> colDetalles = new TableColumn<>("Detalles");
-        colDetalles.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDetalles()));
+        TableColumn<Incidencia, String> colDetalles = new TableColumn<>("Descripción");
+        colDetalles.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getDescripcion())
+        );
 
 
         /* --------- COLUMNA ComboBox para técnicos --------- */
@@ -114,8 +117,8 @@ public class AsignarTecnicosView {
             private final ComboBox<User> combo = new ComboBox<>();
 
             {
-                combo.setPromptText("Seleccionar");
-                combo.setPrefWidth(150);
+                combo.setPromptText("Seleccionar técnico");
+                combo.setPrefWidth(180);
             }
 
             @Override
@@ -131,8 +134,8 @@ public class AsignarTecnicosView {
 
                 Incidencia inc = getTableView().getItems().get(getIndex());
 
-                // Seleccionar el técnico asignado si existe
-                if (inc.getIdTecnico() != 0) {
+                // Seleccionar el técnico asignado
+                if (inc.getIdTecnico() != null) {
                     for (User u : combo.getItems()) {
                         if (u.getId() == inc.getIdTecnico()) {
                             combo.setValue(u);
@@ -142,10 +145,10 @@ public class AsignarTecnicosView {
                 }
 
                 combo.setOnAction(e -> {
-                    User sel = combo.getValue();
-                    if (sel != null) {
-                        IncidenciasDAO.asignarTecnico(inc.getId(), sel.getId());
-                        inc.setIdTecnico(sel.getId());
+                    User seleccionado = combo.getValue();
+                    if (seleccionado != null) {
+                        IncidenciasDAO.asignarTecnico(inc.getId(), seleccionado.getId());
+                        inc.setIdTecnico(seleccionado.getId());
                     }
                 });
 
@@ -156,11 +159,11 @@ public class AsignarTecnicosView {
 
         table.getColumns().addAll(colId, colEstado, colTipo, colDetalles, colTecnico);
 
-        /* Cargar todos al inicio */
+        /* Cargar datos */
         table.getItems().addAll(IncidenciasDAO.obtenerTodas());
 
 
-        /* --------- Manejo de tabs --------- */
+        /* --------- TABS acciones --------- */
         tabTodos.setOnAction(e -> cargarEstado(tabs, tabTodos, table, "Todos"));
         tabEspera.setOnAction(e -> cargarEstado(tabs, tabEspera, table, "En espera"));
         tabAbierto.setOnAction(e -> cargarEstado(tabs, tabAbierto, table, "Abierto"));
@@ -168,7 +171,7 @@ public class AsignarTecnicosView {
         tabResuelto.setOnAction(e -> cargarEstado(tabs, tabResuelto, table, "Resuelto"));
 
 
-        /* ---------------- MAIN CARD ---------------- */
+        /* --------- MAIN CARD --------- */
         VBox card = new VBox(25);
         card.getStyleClass().add("card");
         card.getChildren().addAll(tabs, table);

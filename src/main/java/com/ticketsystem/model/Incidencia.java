@@ -34,7 +34,10 @@ public class Incidencia {
     public String getTipo() { return tipo; }
     public String getDescripcion() { return descripcion; }
 
-    public int getIdTecnico() { return idTecnico; }
+    public Integer getIdTecnico() { 
+        return idTecnico; 
+    }
+
 
     public void setIdTecnico(Integer idTecnico) {
         this.idTecnico = idTecnico;
