@@ -8,7 +8,9 @@ com\ticketsystem\dao\IncidenciasDAO.class
 com\ticketsystem\model\User.class
 com\ticketsystem\views\AdminHistoryView$1.class
 com\ticketsystem\views\LoadingView.class
+com\ticketsystem\utils\Session.class
 com\ticketsystem\views\TicketStatusView$1.class
+com\ticketsystem\views\TecnicosView.class
 com\ticketsystem\views\ServicesView.class
 com\ticketsystem\database\SeedData.class
 com\ticketsystem\App.class

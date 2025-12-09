@@ -188,4 +188,48 @@ public class IncidenciasDAO {
 
         return lista;
     }
+
+    public static List<Incidencia> obtenerPorTecnico(int idTecnico) {
+
+        List<Incidencia> lista = new ArrayList<>();
+
+        String sql = """
+            SELECT id, nombre, primer_apellido, segundo_apellido,
+                telefono, tipo, descripcion, estado, id_usuario_asignado
+            FROM incidencias
+            WHERE id_usuario_asignado = ?
+        """;
+
+        try (Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idTecnico);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                // Manejo de null correctamente
+                Integer idAsignado = rs.getObject("id_usuario_asignado", Integer.class);
+
+                lista.add(new Incidencia(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("primer_apellido"),
+                    rs.getString("segundo_apellido"),
+                    rs.getString("telefono"),
+                    rs.getString("tipo"),
+                    rs.getString("descripcion"),
+                    rs.getString("estado"),
+                    idAsignado
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
 }

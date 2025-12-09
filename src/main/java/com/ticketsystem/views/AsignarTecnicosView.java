@@ -15,7 +15,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 public class AsignarTecnicosView {
 
@@ -66,6 +70,7 @@ public class AsignarTecnicosView {
         Button logoutBtn = new Button();
         logoutBtn.setGraphic(logoutIcon);
         logoutBtn.getStyleClass().add("logout-btn");
+        logoutBtn.setOnAction(e -> ScreenManager.show(new LoginView()));
 
         header.getChildren().addAll(logo, spacer, logoutBtn);
 

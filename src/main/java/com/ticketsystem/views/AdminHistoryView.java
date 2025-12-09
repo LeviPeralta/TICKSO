@@ -41,10 +41,7 @@ public class AdminHistoryView {
         btnAsignar.getStyleClass().add("sidebar-btn");
         btnAsignar.setOnAction(e -> ScreenManager.show(AsignarTecnicosView.getView()));
 
-        Button btnCambiar = new Button("Cambiar estados");
-        btnCambiar.getStyleClass().add("sidebar-btn");
-
-        sidebar.getChildren().addAll(lblHistorial, btnAsignar, btnCambiar);
+        sidebar.getChildren().addAll(lblHistorial, btnAsignar);
 
 
         /* ---------------- TOP HEADER ---------------- */

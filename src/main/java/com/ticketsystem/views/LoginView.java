@@ -3,6 +3,7 @@ package com.ticketsystem.views;
 import com.ticketsystem.dao.UserDAO;
 import com.ticketsystem.model.User;
 import com.ticketsystem.utils.ScreenManager;
+import com.ticketsystem.utils.Session;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -66,31 +67,37 @@ public class LoginView extends StackPane {
         Button loginBtn = new Button("Iniciar Sesión");
         loginBtn.getStyleClass().add("login-btn");
 
-        // === ACCIÓN LOGIN CON ROLES ===
+        // === ACCIÓN DE LOGIN ===
         loginBtn.setOnAction(e -> {
 
             String user = usuario.getText().trim();
             String pass = password.getText().trim();
 
-            // Ahora regresa un objeto User
+            // Login correcto → regresa User
             User loggedUser = UserDAO.login(user, pass);
 
             if (loggedUser != null) {
 
                 error.setVisible(false);
 
+                // Guardar el usuario en sesión 👇
+                Session.setCurrentUser(loggedUser);
+
                 // Mostrar pantalla de carga
                 ScreenManager.show(LoadingView.getView());
 
                 Timeline wait = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {
 
-                    switch (loggedUser.getRol().toLowerCase()) {
+                    String rol = loggedUser.getRol().toLowerCase();
+
+                    switch (rol) {
                         case "admin":
                             ScreenManager.show(AdminHistoryView.getView());
                             break;
 
                         case "tecnico":
-                            ScreenManager.show(ServicesView.getView());
+                            // Redirige a la vista correcta para técnicos
+                            ScreenManager.show(new TicketStatusView().getView());
                             break;
 
                         case "usuario":
@@ -98,8 +105,9 @@ public class LoginView extends StackPane {
                             break;
 
                         default:
-                            System.out.println("Rol desconocido: " + loggedUser.getRol());
+                            System.out.println("Rol desconocido: " + rol);
                             ScreenManager.show(MenuView.getView());
+                            break;
                     }
 
                 }));

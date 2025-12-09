@@ -8,6 +8,7 @@ C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\model\In
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\model\User.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\services\IncidenciaService.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\utils\ScreenManager.java
+C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\utils\Session.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\AdminHistoryView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\AsignarTecnicosView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\LoadingView.java
@@ -15,4 +16,5 @@ C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\Lo
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\MenuView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\ReportView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\ServicesView.java
+C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\TecnicosView.java
 C:\Users\joss_\Integradoras\TicketSystem\src\main\java\com\ticketsystem\views\TicketStatusView.java

@@ -98,5 +98,39 @@ public class UserDAO {
         return lista;
     }
 
+    /**
+ * Obtener usuarios según su rol (admin, tecnico, usuario)
+ */
+    public static java.util.List<User> obtenerPorRol(String rol) {
+
+        java.util.List<User> lista = new java.util.ArrayList<>();
+
+        String sql = "SELECT id, usuario, password, rol FROM usuarios WHERE LOWER(rol) = LOWER(?)";
+
+        try (Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, rol);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    lista.add(new User(
+                        rs.getInt("id"),
+                        rs.getString("usuario"),
+                        rs.getString("password"),
+                        rs.getString("rol")
+                    ));
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al obtener usuarios por rol: " + e.getMessage());
+        }
+
+        return lista;
+    }
+
 
 }
